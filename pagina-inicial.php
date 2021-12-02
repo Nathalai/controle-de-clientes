@@ -24,12 +24,12 @@
 
     <section class="conteudo">
       <?php        
-      include_once "menu.php";
+      include_once "menu.php";      
       ?>
-    
+
       <?php
-        if (isset($_SESSION["usuarioUsername"])) {
-          echo  '<p>Olá ' . $_SESSION["nomeusuario"] . '!</p>';
+      if (isset($_SESSION["nomeusuario"])) {
+          echo  '<section class="mensagem"><p class="mensagem">Olá' . $_SESSION["nomeusuario"] . '!</p></section>';
         } else {
           header("location: ./acessar.php");
           exit();

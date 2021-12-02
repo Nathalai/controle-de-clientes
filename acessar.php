@@ -2,7 +2,7 @@
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8" />
-        <title>Página Inicial</title>
+        <title>Acessar</title>
         <link rel="shortcut icon" href="https://www.rpinfo.com.br/views/geral/img/favicon.ico" type="image/x-icon">
         <link href="style/main.css" rel="stylesheet"/>
         <link

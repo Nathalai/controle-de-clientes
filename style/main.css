@@ -12,8 +12,13 @@ body section p {
   margin: 16px 0 0 0;
 }
 
+body section.mensagem {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
 body section p.mensagem {
-  text-align: center;
   font-size: 1.2rem;
   padding-top: 16px;
 }
@@ -47,8 +52,12 @@ body section.formulario {
   align-items: center;
 }
 
-body section.formulario h4 {
-  margin-top: 24px;
+body section.formulario .mb-3 {
+  margin-bottom: 0.3rem !important;
+}
+
+form label:first-child {
+  margin-top: 16px;
 }
 
 form input,
@@ -69,14 +78,33 @@ form .submitBt {
   height: 3.2rem;
   width: 10rem;
   color: #fff;
-  background-color: #ff9633;
+  background-color: #dd050c;
   border: none;
   border-radius: 8px;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 form .submitBt:hover {
-  background-color: #ff5233;
+  background-color: #001c65;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+section.formulario h4 {
+  text-align: center;
+  margin-top: 24px !important;
+  margin-bottom: 0 !important;
+}
+
+section.conteudo h5 {
+  color: rgb(49, 163, 87);
+  text-align: center;
+  margin-top: 32px !important;
+}
+
+section.conteudo p.error {
+  color: #dd050c;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 32px !important;
 }
