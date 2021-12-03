@@ -46,9 +46,9 @@
           }
         ?>
 
-        <h4>Cadastrar Usuário</h4>
+        <h4><b>CADASTRAR USUÁRIO</b></h4>
 
-        <form class="was-validated" action="includes/cadastrar-usuario.inc.php" method="post" style="width: 50%;">           
+        <form class="was-validated" action="includes/cadastrar-usuario.inc.php" method="post" style="width: 50%; margin-top: 16px;">           
           <div class="mb-3">
             <label class="form-label">Nome</label>
             <input type="text" name="nomeusuario" class="form-control" placeholder="Nome do usuário" required>

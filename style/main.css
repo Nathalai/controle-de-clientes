@@ -19,7 +19,7 @@ body section.mensagem {
 }
 
 body section p.mensagem {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   padding-top: 16px;
 }
 
@@ -30,7 +30,7 @@ body section.conteudo {
 }
 
 body section.menu {
-  width: 20%;
+  width: 230px;
   height: 100vh;
   background-color: rgb(241, 241, 241);
   display: flex;
@@ -39,6 +39,10 @@ body section.menu {
 
 body section.menu a {
   color: black;
+}
+
+body section.menu a:hover {
+  color: #001c65;
 }
 
 body section.menu a:first-child {
@@ -52,12 +56,28 @@ body section.formulario {
   align-items: center;
 }
 
+body section.formulario p {
+  font-size: 1.25rem;
+  margin: 24px 0 6px px 0;
+}
+
 body section.formulario .mb-3 {
   margin-bottom: 0.3rem !important;
 }
 
-form label:first-child {
+form.cadastrar-cliente {
+  width: 100%;
   margin-top: 16px;
+}
+
+form .cadastrar-cliente {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+form label {
+  margin-top: 8px;
 }
 
 form input,
@@ -78,15 +98,15 @@ form .submitBt {
   height: 3.2rem;
   width: 10rem;
   color: #fff;
-  background-color: #dd050c;
+  background-color: #001c65;
   border: none;
   border-radius: 8px;
-  margin-top: 1rem;
+  margin: 2rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 form .submitBt:hover {
-  background-color: #001c65;
+  background-color: #003983;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -96,13 +116,13 @@ section.formulario h4 {
   margin-bottom: 0 !important;
 }
 
-section.conteudo h5 {
+section.formulario h5 {
   color: rgb(49, 163, 87);
   text-align: center;
   margin-top: 32px !important;
 }
 
-section.conteudo p.error {
+section.formulario p.error {
   color: #dd050c;
   font-size: 1.25rem;
   text-align: center;

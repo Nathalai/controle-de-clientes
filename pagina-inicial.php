@@ -29,7 +29,7 @@
 
       <?php
       if (isset($_SESSION["nomeusuario"])) {
-          echo  '<section class="mensagem"><p class="mensagem">Olá' . $_SESSION["nomeusuario"] . '!</p></section>';
+          echo  '<section class="mensagem"><p class="mensagem">Olá ' . $_SESSION["nomeusuario"] . '!</p></section>';
         } else {
           header("location: ./acessar.php");
           exit();

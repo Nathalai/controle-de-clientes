@@ -20,34 +20,37 @@
     <body>
       <?php
         include_once "header.php";
-      ?>
-
-      <?php
-        if (isset($_GET["error"])) {
-          if ($_GET["error"] == "usuario-nao-cadastrado") {
-            echo '<h5>Usuário não cadastrado!</h5>';
-          }
-          else if ($_GET["error"] == "senhaincorreta") {
-            echo '<h5>Senha incorreta, tente novamente!</h5>';
-          }
-        } 
-      ?>     
+      ?>      
 
       <section class="formulario" style="width: 100%;">
+        <?php
+          if (isset($_GET["error"])) {
+            if ($_GET["error"] == "stmt-falhou") {
+            echo "<p class='error'>Algo deu errado, tente novamente!</p>";
+            }
+            else if ($_GET["error"] == "usuario-nao-cadastrado") {
+              echo "<p class='error'>Usuário não cadastrado!</p>";
+            }          
+            else if ($_GET["error"] == "senha-incorreta") {
+              echo "<p class='error'>Senha incorreta, tente novamente!</p>";
+            }
+          } 
+        ?>
+
         <h4>Acessar</h4>
         <form class="was-validated" action="includes/acessar.inc.php" method="post" style="width: 40%;">
           <div class="mb-3">
             <label class="form-label">Usuário</label>
-            <input type="text" name="usuario" class="form-control" placeholder="Digite seu nome de usuário" required>
+            <input type="text" name="nomeusuario" class="form-control" placeholder="Digite o nome de usuário" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Senha</label>
             <div class="input-group">
-              <input type="password" name="senha" class="form-control" placeholder="Digite sua senha" required>
+              <input type="password" name="senhausuario" class="form-control" placeholder="Digite a senha" required>
             </div>
           </div>            
           <div class="submit">
-            <button type="submit" name="acessarBtn" class="submitBt">ENTRAR</button>
+            <button type="submit" name="acessarBtn" class="submitBt">ACESSAR</button>
           </div>
         </form>
       </section>
