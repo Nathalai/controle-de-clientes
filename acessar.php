@@ -38,7 +38,7 @@
         ?>
 
         <h4>Acessar</h4>
-        <form class="was-validated" action="includes/acessar.inc.php" method="post" style="width: 40%;">
+        <form class="was-validated" action="includes/acessar.inc.php" method="post" style="width: 30%;">
           <div class="mb-3">
             <label class="form-label">Usuário</label>
             <input type="text" name="nomeusuario" class="form-control" placeholder="Digite o nome de usuário" required>

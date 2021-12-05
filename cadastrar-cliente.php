@@ -33,6 +33,9 @@
             if ($_GET["error"] == "cliente-ja-cadastrado") {
             echo "<p class='error'>Este cliente já foi cadastrado!</p>";
             }
+            else if ($_GET["error"] == "stmt-falhou") {
+              echo "<p class='error'>Algo deu errado, tente novamente!</p>";
+            }
             else if ($_GET["error"] == "none") {
             echo "<h5>O cliente foi cadastrado com sucesso!</h5>";
             }
@@ -44,16 +47,8 @@
         <form class="was-validated cadastrar-cliente" action="includes/cadastrar-cliente.inc.php" method="post">        
           <div class="cadastrar-cliente">
 
-            <div class="dados-pessoais" style="width: 420px;">
+            <div class="dados-pessoais" style="width: 40%;">
               <p><b>Dados Pessoais</b></p>
-              <div class="mb-3">
-                <label class="form-label">Nome</label>
-                <input type="text" name="nomecliente" class="form-control" placeholder="Ex.: Maria dos Santos" maxlength="45" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">CPF</label>
-                <input type="text" name="cpfcliente" class="form-control" placeholder="Ex.: 000.000.000-00" minlength="11" maxlength="14" required>
-              </div>
               <div class="mb-3">
                 <label class="form-label" for="tipocliente">Tipo</label>
                 <select class="form-select" name="tipocliente" id="tipocliente" required>
@@ -63,14 +58,22 @@
                 </select>
               </div>
               <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <input type="text" name="nomecliente" class="form-control" maxlength="45" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">CPF</label>
+                <input type="text" name="cpfcliente" class="form-control" placeholder="Somente números" minlength="11" maxlength="11" required>
+              </div>              
+              <div class="mb-3">
                 <label class="form-label">Data de Nascimento</label>
                 <input type="date" name="dtnasccliente" class="form-control" required>          
               </div>
 
-              <p><b>Telefone</b></p>
+              <!-- <p><b>Telefone</b></p>
               <div class="mb-3">
-                <label class="form-label" for="tipocelular">Tipo</label>
-                <select class="form-select" name="tipocelular" id="tipocelular" required>
+                <label class="form-label" for="tipotelefone">Tipo</label>
+                <select class="form-select" name="tipotelefone" id="tipotelefone" required>
                   <option value="">---</option>
                   <option value="1">Celular</option>
                   <option value="2">Fixo</option>
@@ -78,19 +81,19 @@
               </div>    
               <div class="mb-3">
                 <label class="form-label">DDD</label>
-                <input type="text" name="ddd" class="form-control" placeholder="Ex.: 46" minlength="2" maxlength="2" required>
+                <input type="text" name="ddd" class="form-control" minlength="2" maxlength="2" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Número de Telefone</label>
-                <input type="text" name="fone" class="form-control" placeholder="Ex.:987654321" minlength="9" maxlength="9" required>
+                <input type="text" name="fone" class="form-control" placeholder="Somente números" minlength="9" maxlength="9" required>
               </div>                        
             </div>
 
-            <div class="endereco" style="width: 420px;">
+            <div class="endereco" style="width: 40%;">
               <p><b>Endereço</b></p>
               <div class="mb-3">
                 <label class="form-label">Logradouro</label>
-                <input type="text" name="logradouro" class="form-control" placeholder="Ex.: Avenida sete de setembro" maxlength="100" required>
+                <input type="text" name="logradouro" class="form-control" maxlength="100" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Número</label>
@@ -98,7 +101,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Complemento</label>
-                <input type="text" name="complemento" class="form-control" placeholder="Ex.: bloco 3, apartamento 55" maxlength="45">
+                <input type="text" name="complemento" class="form-control" maxlength="45">
               </div>
               <div class="mb-3">
                 <label class="form-label">Bairro</label>
@@ -106,7 +109,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">CEP</label>
-                <input type="text" name="cep" class="form-control" minlength="8" maxlength="8">
+                <input type="text" name="cep" class="form-control" placeholder="Somente números" minlength="8" maxlength="8">
               </div>          
               <div class="mb-3">
                 <label class="form-label" for="uf">UF</label>
@@ -146,6 +149,10 @@
               </div>
             </div>
           </div>
+ -->
+          <?php 
+          echo '<input type="hidden" name="idusuario" value="' . $_SESSION["idusuario"] . '" />';
+          ?>
 
           <div class="submit">
             <button type="submit" name="cadastrarClienteBtn" class="submitBt">CADASTRAR</button>

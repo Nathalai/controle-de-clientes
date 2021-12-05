@@ -13,7 +13,7 @@ body section p {
 }
 
 body section.mensagem {
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -30,7 +30,7 @@ body section.conteudo {
 }
 
 body section.menu {
-  width: 230px;
+  width: 300px;
   height: 100vh;
   background-color: rgb(241, 241, 241);
   display: flex;
@@ -50,7 +50,7 @@ body section.menu a:first-child {
 }
 
 body section.formulario {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
