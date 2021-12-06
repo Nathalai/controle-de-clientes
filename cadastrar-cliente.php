@@ -86,11 +86,11 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Número de Telefone</label>
-                <input type="text" name="fone" class="form-control" placeholder="Somente números" minlength="9" maxlength="9" required>
+                <input type="text" name="fone" class="form-control" placeholder="Somente números" minlength="8" maxlength="9" required>
               </div>                        
             </div>
 
-            <!--<div class="endereco" style="width: 40%;">
+            <div class="endereco" style="width: 40%;">
               <p><b>Endereço</b></p>
               <div class="mb-3">
                 <label class="form-label">Logradouro</label>
@@ -110,7 +110,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">CEP</label>
-                <input type="text" name="cep" class="form-control" placeholder="Somente números" minlength="8" maxlength="8">
+                <input type="text" name="cep" class="form-control" placeholder="Somente números" minlength="8" maxlength="8" required>
               </div>          
               <div class="mb-3">
                 <label class="form-label" for="uf">UF</label>
@@ -148,7 +148,7 @@
                 <label class="form-label">Cidade</label>
                 <input type="text" name="cidade" class="form-control" maxlength="45" required>
               </div>
-            </div>-->
+            </div>
           </div>
  
           <?php 

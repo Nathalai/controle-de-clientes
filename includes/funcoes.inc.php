@@ -72,7 +72,7 @@ function clienteExiste($connection, $cpfcliente) {
     mysqli_stmt_close($stmt);
 }
 
-function cadastrarCliente($connection, $nomecliente, $cpfcliente, $tipocliente, $dtnasccliente, $idusuario) {
+function cadastrarDadosPessoais($connection, $nomecliente, $cpfcliente, $tipocliente, $dtnasccliente, $idusuario) {
   $sql = "INSERT INTO clientes (nomecliente, cpfcliente, tipocliente, dtnasccliente, usuarios_idusuario) VALUES (?, ?, ? ,?, ?);";
   $stmt = mysqli_stmt_init($connection);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -115,14 +115,31 @@ function cadastrarTelefone($connection, $ddd, $fone, $tipotelefone, $clientes_id
   }   
   
   mysqli_stmt_bind_param($stmt, "sssss", $ddd, $fone, $tipotelefone, $clientes_idcliente, $idusuario);
-  $result = mysqli_stmt_execute($stmt);
-  if (!$result) {
-    header("location: ../cadastrar-cliente.php?error=none");
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);  
+}
+
+function cadastrarEndereco($connection, $logradouro, $numero, $complemento, $bairro, $cep, $cidade, $uf, $clientes_idcliente, $idusuario) {
+  $sql = "INSERT INTO enderecos (logradouro, numero, complemento, bairro, cep, cidade, uf, clientes_idcliente, usuarios_idusuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  $stmt = mysqli_stmt_init($connection);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../cadastrar-cliente.php?error=stmt-falhou");
     exit();
-  } else {
-    mysqli_stmt_close($stmt);
-  } 
+  }   
   
+  mysqli_stmt_bind_param($stmt, "sssssssss", $logradouro, $numero, $complemento, $bairro, $cep, $cidade, $uf, $clientes_idcliente, $idusuario);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+}
+
+function criarCliente($connection, $nomecliente, $cpfcliente, $tipocliente, $dtnasccliente, $ddd, $fone, $tipotelefone, $logradouro, $numero, $complemento, $bairro, $cep, $cidade, $uf, $idusuario) {
+  cadastrarDadosPessoais($connection, $nomecliente, $cpfcliente, $tipocliente, $dtnasccliente, $idusuario);
+  $clienteCadastrado = obterIdClientePeloCpf($connection, $cpfcliente);
+  $clientes_idcliente = $clienteCadastrado['idcliente'];
+  cadastrarTelefone($connection, $ddd, $fone, $tipotelefone, $clientes_idcliente, $idusuario);
+  cadastrarEndereco($connection, $logradouro, $numero, $complemento, $bairro, $cep, $cidade, $uf, $clientes_idcliente, $idusuario);
+  header("location: ../cadastrar-cliente.php?error=none");
+  exit();
 }
 
 function cadastrarUsuario($connection, $nomeusuario, $senhausuario) {
@@ -139,16 +156,6 @@ function cadastrarUsuario($connection, $nomeusuario, $senhausuario) {
   mysqli_stmt_execute($stmt);
   mysqli_stmt_close($stmt);
   header("location: ../cadastrar-usuario.php?error=none");
-  exit();
-}
-
-function criarCliente($connection, $nomecliente, $cpfcliente, $tipocliente, $dtnasccliente, $idusuario, $ddd, $fone, $tipotelefone) {
-  cadastrarCliente($connection, $nomecliente, $cpfcliente, $tipocliente, $dtnasccliente, $idusuario);
-  $clienteCadastrado = obterIdClientePeloCpf($connection, $cpfcliente);
-  $clientes_idcliente = $clienteCadastrado['idcliente'];
-  cadastrarTelefone($connection, $ddd, $fone, $tipotelefone, $clientes_idcliente, $idusuario);
-  // cadastrarEndereco($connection, $logradouro, $numero, $complemento, $bairro, $cep, $cidade, $uf, $clienteCadastrado['idcliente'], $idusuario);
-  header("location: ../cadastrar-cliente.php?error=none");
   exit();
 }
 
