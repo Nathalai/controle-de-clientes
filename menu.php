@@ -9,5 +9,5 @@
     }
   ?>
 
-  <a class="nav-link" aria-current="page" href="includes/sair.inc.php">Sair</a>
+  <a class="nav-link sair" aria-current="page" href="includes/sair.inc.php">Sair</a>
 </section>

@@ -31,7 +31,7 @@
         <?php
           if (isset($_GET["error"])) {
             if ($_GET["error"] == "cliente-ja-cadastrado") {
-            echo "<p class='error'>Este cliente já foi cadastrado!</p>";
+            echo "<p class='error'>Este CPF já foi cadastrado!</p>";
             }
             else if ($_GET["error"] == "stmt-falhou") {
               echo "<p class='error'>Algo deu errado, tente novamente!</p>";

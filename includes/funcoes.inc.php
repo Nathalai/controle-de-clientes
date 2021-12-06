@@ -142,6 +142,77 @@ function criarCliente($connection, $nomecliente, $cpfcliente, $tipocliente, $dtn
   exit();
 }
 
+function buscarClientesDB($connection) {    
+  $sql = "SELECT c.idcliente, c.nomecliente, c.cpfcliente, c.tipocliente, c.dtnasccliente, u.nomeusuario FROM clientes AS c INNER JOIN usuarios AS u ON u.idusuario = c.usuarios_idusuario;";
+  $result = mysqli_query($connection, $sql);
+
+  if (mysqli_num_rows($result) > 0) {
+  $itens = array();    
+    while($row = mysqli_fetch_assoc($result)) {
+      $tipocliente;
+      if ($row['tipocliente'] === "S") {
+        $tipocliente = "Silver";
+      } else if ($row['tipocliente'] === "G") {
+        $tipocliente = "Gold";
+      } else if ($row['tipocliente'] === "P") {
+        $tipocliente = "Platinum";
+      }
+
+      $dataNascDB = $row['dtnasccliente'];
+      $dataNascConvertida = date("d/m/Y", strtotime($dataNascDB));
+
+      $item = array('ID' => $row["idcliente"], 'Nome' => $row["nomecliente"], 'CPF'=> $row['cpfcliente'], 'Tipo de Cliente'=> $tipocliente, 'Data de Nascimento'=> $dataNascConvertida, 'Cadastrado(a) por:'=> $row['nomeusuario']);
+      array_push($itens, $item);
+    }
+
+    return $itens;
+  }
+
+  mysqli_close($connection);
+}
+
+function excluirDadosPessoais($connection, $idcliente) {
+  $sql = "DELETE FROM clientes WHERE idcliente = ?;";
+    $stmt = mysqli_stmt_init($connection);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../exibir-clientes.php?error=stmt-falhou");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "s", $idcliente);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function excluirTelefone($connection, $idcliente) {
+  $sql = "DELETE FROM telefones WHERE clientes_idcliente = ?;";
+    $stmt = mysqli_stmt_init($connection);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../exibir-clientes.php?error=stmt-falhou");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "s", $idcliente);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function excluirEndereco($connection, $idcliente) {
+  $sql = "DELETE FROM enderecos WHERE clientes_idcliente = ?;";
+    $stmt = mysqli_stmt_init($connection);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../exibir-clientes.php?error=stmt-falhou");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "s", $idcliente);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function excluirClienteDB($connection, $idcliente) {  
+  excluirDadosPessoais($connection, $idcliente);
+  excluirTelefone($connection, $idcliente);
+  excluirEndereco($connection, $idcliente);
+}
+
 function cadastrarUsuario($connection, $nomeusuario, $senhausuario) {
   $sql = "INSERT INTO usuarios (nomeusuario, senhausuario) VALUES (?, ?);";
   $stmt = mysqli_stmt_init($connection);

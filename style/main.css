@@ -42,7 +42,15 @@ body section.menu a {
 }
 
 body section.menu a:hover {
-  color: #001c65;
+  color: #003983;
+}
+
+body section.menu a.sair {
+  margin-top: 24px;
+}
+
+body section.menu a.sair:hover {
+  color: #dd050c;
 }
 
 body section.menu a:first-child {
@@ -127,4 +135,30 @@ section.formulario p.error {
   font-size: 1.25rem;
   text-align: center;
   margin-top: 32px !important;
+}
+
+body table {
+  display: flex;
+  justify-content: center;
+}
+
+body .col,
+body table th,
+body table td {
+  border: 1px solid rgba(39, 41, 43, 0.1);
+}
+
+body table th,
+body table td {
+  padding: 0 8px;
+  max-width: 250px;
+}
+
+body table a {
+  color: #003983;
+}
+
+body div.container .row:first-child,
+body table tbody {
+  margin-top: 24px;
 }
