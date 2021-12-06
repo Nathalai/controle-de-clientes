@@ -53,8 +53,9 @@
                 <label class="form-label" for="tipocliente">Tipo</label>
                 <select class="form-select" name="tipocliente" id="tipocliente" required>
                   <option value="">---</option>
-                  <option value="1">Pessoa Física</option>
-                  <option value="2">Pessoa Jurídica</option>
+                  <option value="S">Silver</option>
+                  <option value="G">Gold</option>
+                  <option value="P">Platinum</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -70,7 +71,7 @@
                 <input type="date" name="dtnasccliente" class="form-control" required>          
               </div>
 
-              <!-- <p><b>Telefone</b></p>
+              <p><b>Telefone</b></p>
               <div class="mb-3">
                 <label class="form-label" for="tipotelefone">Tipo</label>
                 <select class="form-select" name="tipotelefone" id="tipotelefone" required>
@@ -89,7 +90,7 @@
               </div>                        
             </div>
 
-            <div class="endereco" style="width: 40%;">
+            <!--<div class="endereco" style="width: 40%;">
               <p><b>Endereço</b></p>
               <div class="mb-3">
                 <label class="form-label">Logradouro</label>
@@ -147,9 +148,9 @@
                 <label class="form-label">Cidade</label>
                 <input type="text" name="cidade" class="form-control" maxlength="45" required>
               </div>
-            </div>
+            </div>-->
           </div>
- -->
+ 
           <?php 
           echo '<input type="hidden" name="idusuario" value="' . $_SESSION["idusuario"] . '" />';
           ?>
