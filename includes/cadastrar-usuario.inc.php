@@ -1,8 +1,8 @@
 <?php
 
-if (isset($_POST["cadastrarUsuarioBtn"])) {
+if (isset($_POST["cadastrarUsuarioBtn"]) && $_POST["nomeusuario"] === "admin") {
  
-  $nomeusuario = $_POST["nomeusuario"];
+  $nomeusuario = $_POST["novousuario"];
   $senhausuario = $_POST["senhausuario"];
   
   require_once "dbhandler.inc.php";

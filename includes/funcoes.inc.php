@@ -22,30 +22,25 @@ function usuarioExiste($connection, $nomeusuario) {
 }
 
 function acessar($connection, $nomeusuario, $senhausuario) {
-  $usuarioExiste = usuarioExiste($connection, $nomeusuario);
+    $usuarioExiste = usuarioExiste($connection, $nomeusuario);
 
-  if ($usuarioExiste === false) {
-    header("location: ../acessar.php?error=usuario-nao-cadastrado");
-    exit();
-  }
 
-  $dbSenha = $usuarioExiste["senhausuario"];
-  header("location: ../acessar.php?" . $nomeusuario . $senhausuario . $dbSenha);
+    if ($usuarioExiste === false) {
+        header("location: ../acessar.php?error=usuario-nao-cadastrado");
+        exit();
+    }
 
-  //$hashedSenha = $usuarioExiste["senhausuario"];
-  //$checarSenha = password_verify($senhausuario, $hashedSenha);
+    $hashedSenha = $usuarioExiste["senhausuario"];
+    $checarSenha = password_verify($senhausuario, $hashedSenha);
 
-  //if ($checarSenha === false) {
-  if ($senhausuario !== $dbSenha) {
-    //$newhashedpass = password_hash($senhausuario, PASSWORD_BCRYPT);
-    header("location: ../acessar.php?error=senha-incorreta");
-    exit();
-  //} else if ($checarSenha === true) {
-  } else if ($senhausuario === $dbSenha) {
-    session_start();
-    $_SESSION["idusuario"] = $usuarioExiste["idusuario"];
-    $_SESSION["nomeusuario"] = $usuarioExiste["nomeusuario"];    
-  }
+    if ($checarSenha === false) {
+        header("location: ../acessar.php?error=senha-incorreta");
+        exit();
+    } else if ($checarSenha === true) {
+        session_start();
+        $_SESSION["idusuario"] = $usuarioExiste["idusuario"];
+        $_SESSION["nomeusuario"] = $usuarioExiste["nomeusuario"];
+    }
 }
 
 function cadastrarLog($connection, $nomeusuario, $data, $hora) {
@@ -344,16 +339,23 @@ function alterarDados($connection, $novotipocliente, $novoddd, $novofone, $novot
 }
 
 function cadastrarUsuario($connection, $nomeusuario, $senhausuario) {
+  $usuarioExiste = usuarioExiste($connection, $nomeusuario);
+
+    if ($usuarioExiste !== false) {
+        header("location: ../cadastrar-usuario.php?error=usuario-ja-utilizado");
+        exit();
+    }
+
   $sql = "INSERT INTO usuarios (nomeusuario, senhausuario) VALUES (?, ?);";
   $stmt = mysqli_stmt_init($connection);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
-    header("location: ../cadastrar-admin.php?error=stmtfalhou");
+    header("location: ../cadastrar-usuario.php?error=stmt-falhou");
     exit();
   }
 
-  //$hashedSenha = password_hash($senha, PASSWORD_BCRYPT);
+  $hashedSenha = password_hash($senhausuario, PASSWORD_DEFAULT);
   
-  mysqli_stmt_bind_param($stmt, "ss", $nomeusuario, $senhausuario);
+  mysqli_stmt_bind_param($stmt, "ss", $nomeusuario, $hashedSenha);
   mysqli_stmt_execute($stmt);
   mysqli_stmt_close($stmt);
   header("location: ../cadastrar-usuario.php?error=none");

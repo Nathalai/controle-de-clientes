@@ -31,10 +31,7 @@
       <section class="formulario">
         <?php
           if (isset($_GET["error"])) {
-            if ($_GET["error"] == "usuario-invalido") {
-              echo "<p class='error'>Usuário inválido! Escolha um nome de usuário que utilize apenas letras e/ou números.</p>";
-            }
-            else if ($_GET["error"] == "usuario-ja-utilizado") {
+            if ($_GET["error"] == "usuario-ja-utilizado") {
               echo "<p class='error'>Este nome de usuário já foi utilizado!</p>";
             }
             else if ($_GET["error"] == "stmt-falhou") {
@@ -51,13 +48,16 @@
         <form class="was-validated" action="includes/cadastrar-usuario.inc.php" method="post" style="width: 40%; margin-top: 16px;">           
           <div class="mb-3">
             <label class="form-label">Nome</label>
-            <input type="text" name="nomeusuario" class="form-control" placeholder="Nome do usuário" required>
+            <input type="text" name="novousuario" class="form-control" placeholder="Nome do usuário" required>
           </div>
             <label class="form-label">Senha</label>
             <div class="mb-3">
               <input type="password" name="senhausuario" class="form-control" placeholder="Senha do usuário" required>
             </div>
           </div>
+          <?php 
+          echo '<input type="hidden" name="nomeusuario" value="' . $_SESSION["nomeusuario"] . '" />';
+          ?>
           <div class="submit">
             <button type="submit" name="cadastrarUsuarioBtn" class="submitBt">CADASTRAR</button>
           </div>
