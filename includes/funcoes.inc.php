@@ -172,7 +172,7 @@ function buscarClientesDB($connection) {
 }
 
 function buscarDadosCliente($connection, $idcliente) {
-  $sql = "SELECT c.nomecliente, c.cpfcliente, c.tipocliente, c.dtnasccliente, 
+  $sql = "SELECT c.idcliente, c.nomecliente, c.cpfcliente, c.tipocliente, c.dtnasccliente, 
   t.ddd, t.fone, t.tipotelefone, 
   e.logradouro,  e.numero, e.complemento, e.bairro, e.cep, e.cidade, e.uf 
   FROM clientes AS c 
@@ -205,6 +205,7 @@ function passarDadosClienteParaSessao($connection, $idcliente) {
   $dataNascConvertida = date("d/m/Y", strtotime($dataNascDB));
 
   session_start();
+  $_SESSION["idcliente"] = $dadosCliente["idcliente"];
   $_SESSION["nomecliente"] = $dadosCliente["nomecliente"];
   $_SESSION["cpfcliente"] = $dadosCliente["cpfcliente"];
   $_SESSION["tipocliente"] = $dadosCliente['tipocliente'];
@@ -262,6 +263,65 @@ function excluirClienteDB($connection, $idcliente) {
   excluirDadosPessoais($connection, $idcliente);
   excluirTelefone($connection, $idcliente);
   excluirEndereco($connection, $idcliente);
+}
+
+function alterarDadosPessoais($connection, $novotipocliente, $idcliente) {
+  $sql = "UPDATE clientes SET tipocliente = ? WHERE idcliente = ?;";
+    $stmt = mysqli_stmt_init($connection);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../ver-detalhes.php?error=stmt-falhou");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ss", $novotipocliente, $idcliente);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    session_start();
+    $_SESSION["tipocliente"] = $novotipocliente;    
+}
+
+function alterarTelefone($connection, $novoddd, $novofone, $novotipotelefone, $idcliente) {
+  $sql = "UPDATE telefones SET ddd = ?, fone = ?, tipotelefone = ? WHERE clientes_idcliente = ?;";
+    $stmt = mysqli_stmt_init($connection);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../ver-detalhes.php?error=stmt-falhou");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ssss", $novoddd, $novofone, $novotipotelefone, $idcliente);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    session_start();
+    $_SESSION["ddd"] = $novoddd;
+    $_SESSION["fone"] = $novofone;
+    $_SESSION["tipotelefone"] = $novotipotelefone;
+}
+
+function alterarEndereco($connection, $novologradouro, $novonumero, $novocomplemento, $novobairro, $novocep, $novocidade, $novouf, $idcliente) {
+  $sql = "UPDATE enderecos SET logradouro = ?, numero = ?, complemento = ?, bairro = ?, cep = ?, cidade = ?, uf = ? WHERE clientes_idcliente = ?;";
+    $stmt = mysqli_stmt_init($connection);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../ver-detalhes.php?error=stmt-falhou");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ssssssss", $novologradouro, $novonumero, $novocomplemento, $novobairro, $novocep, $novocidade, $novouf, $idcliente);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    session_start();
+    $_SESSION["logradouro"] = $novologradouro;
+    $_SESSION["numero"] = $novonumero;
+    $_SESSION["complemento"] = $novocomplemento;
+    $_SESSION["bairro"] = $novobairro;
+    $_SESSION["cep"] = $novocep;
+    $_SESSION["cidade"] = $novocidade;
+    $_SESSION["uf"] = $novouf;
+}
+
+function alterarDados($connection, $novotipocliente, $novoddd, $novofone, $novotipotelefone, $novologradouro, $novonumero, $novocomplemento, $novobairro, $novocep, $novocidade, $novouf, $idcliente) {  
+  alterarDadosPessoais($connection, $novotipocliente, $idcliente);
+  alterarTelefone($connection, $novoddd, $novofone, $novotipotelefone, $idcliente);
+  alterarEndereco($connection, $novologradouro, $novonumero, $novocomplemento, $novobairro, $novocep, $novocidade, $novouf, $idcliente);
 }
 
 function cadastrarUsuario($connection, $nomeusuario, $senhausuario) {

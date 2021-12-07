@@ -34,7 +34,7 @@
               echo "<p class='error'>Algo deu errado, tente novamente!</p>";
             }
             else if ($_GET["error"] == "none") {
-            echo "<h5>O cliente foi cadastrado com sucesso!</h5>";
+            echo "<h5>Os dados foram alterados com sucesso!</h5>";
             }
           }
         ?>
@@ -152,12 +152,11 @@
               </div>          
               <div class="mb-3">
                 <label class="form-label" for="uf">UF</label>
-                <select class="form-select" name="uf" id="uf" required>
-                  <option value="">---</option>
+                <select class="form-select" name="uf" id="listaUf">
                   <option value="AC">AC</option>
                   <option value="AL">AL</option>
                   <option value="AM">AM</option>
-                  <option value="AP">AP</option>              
+                  <option value="AP">AP</option>
                   <option value="BA">BA</option>
                   <option value="CE">CE</option>
                   <option value="DF">DF</option>
@@ -192,7 +191,7 @@
           </div>
  
           <?php 
-          echo '<input type="hidden" name="idusuario" value="' . $_SESSION["idusuario"] . '" />';
+          echo '<input type="hidden" name="idcliente" value="' . $_SESSION["idcliente"] . '" />';
           ?>
 
           <div class="submit">
@@ -200,6 +199,15 @@
           </div>
         </form>
       </section>
-    </section>        
+    </section>
   </body>
+
+  <script>       
+    <?php 
+    echo 'var uf = "' . $_SESSION["uf"] . '";';
+    ?>
+    var ufSelecionada = document.querySelector(`#listaUf option[value=${uf}]`);
+    ufSelecionada.selected = true;
+  </script>
+
 </html>

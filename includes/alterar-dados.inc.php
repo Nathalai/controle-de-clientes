@@ -2,31 +2,32 @@
 
 if (isset($_POST["alterarDadosBtn"])) {
 
-    $usuarioId = $_POST["usuarioId"];
-    $novoUsername = $_POST["username"];
-    $novoEmail = $_POST["email"];
+  $novotipocliente = $_POST["tipocliente"];
 
-    require_once "dbhandler.inc.php";
-    require_once "funcoes.inc.php";
-    
-    if (usuarioInvalido($novoUsername) !== false) {
-        header("location: ../perfil.php?error=usuarioinvalido");
-        exit();
-    }
-    if (emailInvalido($novoEmail) !== false) {
-        header("location: ../perfil.php?error=emailinvalido");
-        exit();
-    }
-    if (usuarioExisteAlterarDados($connection, $novoUsername, $novoEmail, $usuarioId) !== false) {
-        header("location: ../perfil.php?error=usuariojautilizado");
-        exit();
-    }
+  $novoddd = $_POST["ddd"];
+  $novofone = $_POST["fone"];
+  $novotipotelefone = $_POST["tipotelefone"];
+  
+  $novologradouro = $_POST["logradouro"];
+  $novonumero = $_POST["numero"];
+  $novocomplemento = $_POST["complemento"];
+  $novobairro = $_POST["bairro"];
+  $novocep = $_POST["cep"];
+  $novocidade = $_POST["cidade"];
+  $novouf = $_POST["uf"];
 
-    alterarDados($connection, $usuarioId, $novoUsername, $novoEmail);
+  $idcliente = $_POST["idcliente"];
 
-} else {
-    header("location: ../perfil.php");
-    exit();
-}
+  require_once "dbhandler.inc.php";
+  require_once "funcoes.inc.php";
+  
+  alterarDados($connection, $novotipocliente, $novoddd, $novofone, $novotipotelefone, $novologradouro, $novonumero, $novocomplemento, $novobairro, $novocep, $novocidade, $novouf, $idcliente);
+ 
+  header("location: ../ver-detalhes.php?error=none");
+  exit();
+ } else {
+  header("location: ../ver-detalhes.php");
+  exit();
+} 
 
 ?>
