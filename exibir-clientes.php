@@ -34,6 +34,9 @@
             if ($_GET["error"] == "sem-cliente-id") {
             echo "<p class='error'>Não foi possível excluir o cliente!</p>";
             }
+            else if ($_GET["error"] == "sem-id-cliente") {
+              echo "<p class='error'>Algo deu errado. Não foi possível obter o ID do cliente.</p>";
+            }
             else if ($_GET["error"] == "stmt-falhou") {
               echo "<p class='error'>Algo deu errado, tente novamente!</p>";
             }
@@ -59,7 +62,7 @@
               foreach($value as $key2=>$value2){
                 $html .= '<td>' . htmlspecialchars($value2) . '</td>';                
               }
-              $html .= '<td><a href="./detalhes-cliente.php?cliente-id=' . $value["ID"] . '">Ver Detalhes</a></td>';
+              $html .= '<td><a href="./includes/buscar-dados-cliente.inc.php?cliente-id=' . $value["ID"] . '">Ver Detalhes</a></td>';
               $html .= '<td><a href="./excluir-cliente.php?cliente-id=' . $value["ID"] . '">Excluir</a></td>';
               $html .= '</tr>';
             }

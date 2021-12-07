@@ -171,6 +171,57 @@ function buscarClientesDB($connection) {
   mysqli_close($connection);
 }
 
+function buscarDadosCliente($connection, $idcliente) {
+  $sql = "SELECT c.nomecliente, c.cpfcliente, c.tipocliente, c.dtnasccliente, 
+  t.ddd, t.fone, t.tipotelefone, 
+  e.logradouro,  e.numero, e.complemento, e.bairro, e.cep, e.cidade, e.uf 
+  FROM clientes AS c 
+  INNER JOIN telefones AS t ON t.clientes_idcliente = c.idcliente 
+  INNER JOIN enderecos AS e ON e.clientes_idcliente = c.idcliente 
+  WHERE c.idcliente = ?;";
+  $stmt = mysqli_stmt_init($connection);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../acessar.php?error=stmt-falhou");
+    exit();
+  }
+  mysqli_stmt_bind_param($stmt, "s", $idcliente);
+  mysqli_stmt_execute($stmt);
+
+  $dadosResultantes = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($dadosResultantes)) {
+    return $row;
+  } else {
+    $result = false;
+    return $result;
+  }
+  mysqli_stmt_close($stmt);
+}
+
+function passarDadosClienteParaSessao($connection, $idcliente) {
+  $dadosCliente = buscarDadosCliente($connection, $idcliente);
+
+  $dataNascDB = $dadosCliente['dtnasccliente'];
+  $dataNascConvertida = date("d/m/Y", strtotime($dataNascDB));
+
+  session_start();
+  $_SESSION["nomecliente"] = $dadosCliente["nomecliente"];
+  $_SESSION["cpfcliente"] = $dadosCliente["cpfcliente"];
+  $_SESSION["tipocliente"] = $dadosCliente['tipocliente'];
+  $_SESSION["dtnasccliente"] = $dataNascConvertida;
+  $_SESSION["ddd"] = $dadosCliente["ddd"];
+  $_SESSION["fone"] = $dadosCliente["fone"];
+  $_SESSION["tipotelefone"] = $dadosCliente["tipotelefone"];
+  $_SESSION["logradouro"] = $dadosCliente["logradouro"];
+  $_SESSION["numero"] = $dadosCliente["numero"];
+  $_SESSION["complemento"] = $dadosCliente["complemento"];
+  $_SESSION["bairro"] = $dadosCliente["bairro"];
+  $_SESSION["cep"] = $dadosCliente["cep"];
+  $_SESSION["cidade"] = $dadosCliente["cidade"];
+  $_SESSION["uf"] = $dadosCliente["uf"];
+  header("location: ../ver-detalhes.php?");
+}
+
 function excluirDadosPessoais($connection, $idcliente) {
   $sql = "DELETE FROM clientes WHERE idcliente = ?;";
     $stmt = mysqli_stmt_init($connection);
