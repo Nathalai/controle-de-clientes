@@ -24,14 +24,13 @@ function usuarioExiste($connection, $nomeusuario) {
 function acessar($connection, $nomeusuario, $senhausuario) {
   $usuarioExiste = usuarioExiste($connection, $nomeusuario);
 
-
   if ($usuarioExiste === false) {
     header("location: ../acessar.php?error=usuario-nao-cadastrado");
     exit();
   }
 
   $dbSenha = $usuarioExiste["senhausuario"];
-    header("location: ../acessar.php?" . $nomeusuario . $senhausuario . $dbSenha);
+  header("location: ../acessar.php?" . $nomeusuario . $senhausuario . $dbSenha);
 
   //$hashedSenha = $usuarioExiste["senhausuario"];
   //$checarSenha = password_verify($senhausuario, $hashedSenha);
@@ -45,11 +44,31 @@ function acessar($connection, $nomeusuario, $senhausuario) {
   } else if ($senhausuario === $dbSenha) {
     session_start();
     $_SESSION["idusuario"] = $usuarioExiste["idusuario"];
-    $_SESSION["nomeusuario"] = $usuarioExiste["nomeusuario"];
-    header("location: ../pagina-inicial.php");
+    $_SESSION["nomeusuario"] = $usuarioExiste["nomeusuario"];    
   }
 }
- 
+
+function cadastrarLog($connection, $nomeusuario, $data, $hora) {
+  $usuarioExiste = usuarioExiste($connection, $nomeusuario);
+
+  if ($usuarioExiste === false) {
+    header("location: ../acessar.php?error=usuario-nao-cadastrado");
+    exit();
+  }
+
+  $descricao = "Data do log: " . $data . " às " . $hora;
+
+  $sql = "INSERT INTO logs_acesso (descricao, usuarios_idusuario) VALUES (?, ?);";
+  $stmt = mysqli_stmt_init($connection);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../acessar.php?error=stmt-falhou");
+    exit();
+  }
+  mysqli_stmt_bind_param($stmt, "ss", $descricao, $usuarioExiste["idusuario"]);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+}
+
 function clienteExiste($connection, $cpfcliente) {
     $sql = "SELECT * FROM clientes WHERE cpfcliente = ?;";
     $stmt = mysqli_stmt_init($connection);
